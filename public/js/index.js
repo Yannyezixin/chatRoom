@@ -16,12 +16,13 @@ socket.on('nicknames', function (nicknames) {
         $('#nicknames').empty().append($('<span>在线: </span>'));
         $('#send-message').css('visibility', 'visible');
         for (var i in nicknames) {
-            $('#nicknames').append($('<b>').text(nicknames[i]));
+            $('#nicknames').append($('<b>').append($('<a class="whisper" href="#">').text('@'), $('<span>').text(nicknames[i])));
         }
     }
 });
 
 $(function () {
+    $('#nick').focus();
     $('#set-nickname').submit(function () {
         if ($('#nick').val() !== '') {
             socket.emit('nickname', $('#nick').val(), function(set) {
@@ -36,15 +37,22 @@ $(function () {
         return false;
     });
     $('#send-message').submit(function () {
-        messageRight = true;
-        message('me', $('#message').val());
-        socket.emit('user message', $('#message').val());
-        clear();
+        if ($('#message').val() !== '') {
+            messageRight = true;
+            message('me', $('#message').val());
+            socket.emit('user message', $('#message').val());
+            clear();
+        }
         return false;
     });
     function clear () {
         $('#message').val('').focus();
     };
+    $("#nicknames").on('click','a', function () {
+        var name = $(this).siblings("span").text();
+        $("#message").val("@" + name + ":");
+        $("#message").focus();
+    });
 });
 
 function message (from, msg) {
