@@ -23,14 +23,16 @@ socket.on('nicknames', function (nicknames) {
 
 $(function () {
     $('#set-nickname').submit(function () {
-        socket.emit('nickname', $('#nick').val(), function(set) {
-            if (!set) {
-                clear();
-                localstatus = true;
-                return $('#chat').addClass('nickname-set');
-            }
-            $('#nickname-error').css('visibility', 'visible');
-        });
+        if ($('#nick').val() !== '') {
+            socket.emit('nickname', $('#nick').val(), function(set) {
+                if (!set) {
+                    clear();
+                    localstatus = true;
+                    return $('#chat').addClass('nickname-set');
+                }
+                $('#nickname-error').css('visibility', 'visible');
+            });
+        }
         return false;
     });
     $('#send-message').submit(function () {
