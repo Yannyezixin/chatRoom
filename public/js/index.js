@@ -5,9 +5,10 @@ socket.on('connect', function () {
     $('#chat').addClass('connected');
 });
 socket.on('user message',message);
+socket.on('whisper',message);
 socket.on('announcement', function (msg) {
     if (localstatus) {
-        $('#content').append($('<p>').text(msg));
+        $('#content').append($('<p>').append($('<b>').text(msg)));
     }
 });
 
@@ -50,7 +51,7 @@ $(function () {
     };
     $("#nicknames").on('click','a', function () {
         var name = $(this).siblings("span").text();
-        $("#message").val("@" + name + ":");
+        $("#message").val("@:" + name + ":");
         $("#message").focus();
     });
 });
