@@ -82,12 +82,19 @@ label {
     padding: 10px;
     font-size:12px;
 }
-#messages #nicknames b {
+#messages #nicknames b{
+    text-decoration: none;
     display: inline-block;
     background-color:#fff;
     padding: 3px;
     border-radius: 4px;
     margin: 2px;
+}
+#messages #nicknames a{
+    text-decoration:none;
+}
+#messages #nicknames a:hover{
+    text-decoration:none;
 }
 
 #messages #content {
