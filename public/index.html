@@ -9,6 +9,23 @@
 </head>
 <body>
     <h1>M-Chat</h1>
+    <div id="roomlist">
+        <table>
+            <thead>
+                    <th>当前在线的聊天室</th>
+                    <th id="roomNum"></th>
+            </thead>
+            <tbody id="roomlists">
+            </tbody>
+        </table>
+    </div>
+    <div id="option">
+        <form id="set-roomname">
+            <input type="text" id="roomName" placeholder="房间名称">
+            <button type="submit">创建</button>
+        </form>
+        <button type="button" id="exitroom">退出房间</button>
+    </div>
     <div id="chat">
         <div id="nickname">
             <form class="wrap" id="set-nickname">
@@ -23,11 +40,13 @@
 
         <div id="messages">
             <div id="nicknames"></div>
+            <div id="roomStatus"></div>
             <div id="content"></div>
         </div>
         <form id="send-message">
             <input id="message" type="text" />
             <button type="submit">发送</button>
+            <button type="button" id="action">操作</button>
         </form>
     </div>
 </body>

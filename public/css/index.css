@@ -45,6 +45,7 @@ h1 {
 #connecting .wrap {
     padding-top: 100px;
 }
+#roomName,
 #nickname input {
     border: 1px solid #ccc;
     padding: 10px;
@@ -52,6 +53,11 @@ h1 {
     font-size: 15px;
     border-radius: 5px;
     box-shadow: inset 0 1px 4px #adadad;
+}
+#roomName {
+    width: 200px;
+    padding: 5px;
+    margin-left:5px;
 }
 #nickname input:focus {
     border-color: #fff;
@@ -115,7 +121,7 @@ label {
 #send-message input {
     height:40px;
     padding: 0 10px;
-    width: 92%;
+    width: 85%;
     position: relative;
     z-index: 100;
     box-shadow: inset 0 2px 2px #fff;
@@ -127,3 +133,40 @@ label {
     background-color:#eee;
     border:0px;
 }
+
+#option {
+    float: right;
+    visibility:hidden;
+    background-color:#fff;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    box-shadow: 2px 2px 25px #aaa;
+
+}
+#roomlist{
+    visibility: hidden;
+}
+table{
+    float: left;
+    border: 1px solid #ddd;
+    background-color:#fff;
+    border-radius: 7px;
+    box-shadow: 2px 2px 25px #aaa;
+}
+
+#roomStatus b {
+    margin-left: 4px;
+    margin-bottom:2px;
+    background-color:#fff;
+    border-radius: 3px;
+}
+
+#exitroom, 
+#set-roomname button,
+#roomlists button {
+    border:none;
+    background-color: #eee;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px #ddd;
+}
+
