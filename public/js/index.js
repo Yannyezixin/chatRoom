@@ -18,7 +18,7 @@ socket.on('announcement', function (msg) {
 
 socket.on('roomStatus', function (data) {
     if (localstatus) {
-        $('#roomStatus').empty().append($('<span>位于房间: ' + data.roomName + '</span>'));
+        $('#roomStatus').empty().append($('<span>位于聊天室: ' + data.roomName + '</span>'));
         $('#roomStatus').append($('<span>').text(' 建立人：' + data.roomStatus[0] + '. 成员:'));
         for (var i = 0; i < data.roomStatus.length; i++) {
             $('#roomStatus').append($('<b>').text(data.roomStatus[i]));
@@ -118,7 +118,7 @@ $(function () {
             socket.emit('check', roomName, function (data) {
                 roomExists = data.result;
                 if (roomExists) {
-                    $('#content').append($('<p>').text('房间已经存在'));
+                    $('#content').append($('<p>').text('聊天室已经存在'));
                 } else {
                     alert(roomName);
                     socket.emit("createRoom", roomName);

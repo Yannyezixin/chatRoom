@@ -51,7 +51,7 @@ io.sockets.on('connection', function (socket) {
                 console.log(socket.room);
                 socket.broadcast.in(socket.room).emit('user message', socket.nickname, msg);
             } else {
-                socket.emit('announcement', '请先选择一个房间加入');
+                socket.emit('announcement', '请先选择一个聊天室加入');
             }
         }
     });
@@ -65,7 +65,7 @@ io.sockets.on('connection', function (socket) {
             nicknames[nick] =  socket.nickname = nick;
             sizeRooms = _.size(rooms);
             socket.emit('roomList', {rooms: rooms, count: sizeRooms});
-            socket.broadcast.emit('announcement', nick + ' 进入房间');
+            socket.broadcast.emit('announcement', nick + ' 进入M-Chat');
             io.sockets.emit('nicknames', nicknames);
             sockets.push(socket);
         }
@@ -80,7 +80,7 @@ io.sockets.on('connection', function (socket) {
         delete people[socket.id];
         var o = _.findWhere(sockets, {'id': socket.id});
         sockets = _.without(sockets, o);
-        socket.broadcast.emit('announcement', socket.nickname + ' 离开房间');
+        socket.broadcast.emit('announcement', socket.nickname + ' 离开M-Chat');
         socket.broadcast.emit('nicknames', nicknames);
     })
 
@@ -96,7 +96,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('createRoom', function(roomName) {
         if (people[socket.id].inroom) {
-            socket.emit('announcement', '你已经在房间中，请先退出房间');
+            socket.emit('announcement', '你已经在聊天室中，请先退出聊天室');
         } else if (!people[socket.id].owns) {
             var id = uuid.v4();
             var room = new Room(roomName, id, socket.id);
@@ -116,20 +116,20 @@ io.sockets.on('connection', function (socket) {
             socket.emit('announcement', "欢迎来到 " + room.name + ".");
             socket.emit('roomStatus', {roomName: room.name, roomStatus: roomPeopleName})
         } else {
-            socket.emit('announcement', "你已经在建立房间，请先退出");
+            socket.emit('announcement', "你已经建立了聊天室，请先退出");
         }
     });
 
     socket.on('joinRoom', function (id) {
         var room = rooms[id];
         if (socket.id === room.owner) {
-            socket.emit("announcement", "你建立了这个房间并且已经在这房间中");
+            socket.emit("announcement", "你建立了这个聊天室并且已经在该聊天室中");
         } else {
             if (_.contains((room.people), socket.id)) {
-                socket.emit("announcement", '你已经加入这个房间');
+                socket.emit("announcement", '你已经加入这个聊天室');
             } else {
                 if (people[socket.id].inroom !== null) {
-                    socket.emit("announcement", '你已经加入了(' + rooms[people[socket.id].inroom].name + '), 请先退出该房间' );
+                    socket.emit("announcement", '你已经加入了(' + rooms[people[socket.id].inroom].name + '), 请先退出聊天室' );
                 } else {
                     var roomPeopleName = [];
                     room.addPerson(socket.id);
@@ -163,7 +163,7 @@ function purge (s, action) {
         var room = rooms[people[s.id].inroom];
         if (s.id == room.owner) {
             if (action === 'disconnect') {
-                s.broadcast.in(room.name).emit('announcement', room.name + '聊天室建立人' + people[s.id].name + '离开房间, 所以你们也退出了聊天室');
+                s.broadcast.in(room.name).emit('announcement', room.name + '聊天室建立人' + people[s.id].name + '离开M-Chat, 所以你们也退出了聊天室');
                 var socketids = [];
                 for (var i = 0; i < sockets.length; i++) {
                     socketids.push(sockets[i].id);
